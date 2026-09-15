@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#090706" />
+  <meta name="description" content="DESCIENDA — un viaje de caída, transformación y retorno." />
+  <title>DESCIENDA</title>
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Fondo fijo: imagen real + capas CRT/VHS transparentes. Sin vídeo ni WebGL. -->
+  <div class="background" aria-hidden="true">
+    <div class="background-image"></div>
+    <canvas id="analogFx"></canvas>
+    <div class="crt-darken"></div>
+    <div class="vignette"></div>
+    <div class="film-burn"></div>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="tracking-line"></div>
+  </div>
+
+  <main>
+    <header class="site-header"><img class="header-logo" src="assets/logo.webp" alt="Descienda" /></header>
+
+    <section class="hero section-shell snap-screen">
+      <div class="hero-copy">
+        <h2 class="hero-line hero-manifesto glitch-text" data-text="Tú que habitas en los fragmentos, recorres las grietas de su separación. Cuando la ilusión se desvanezca,">Tú que habitas en los fragmentos, recorres las grietas de su separación.<br>Cuando la ilusión se desvanezca,</h2>
+        <h1 class="descienda-fire glitch-text" data-text="descienda fuego.">descienda fuego.</h1>
+      </div>
+    </section>
+
+    <section class="album section-shell snap-screen" aria-label="Escuchar Descienda">
+      <div class="bandcamp-frame">
+        <iframe title="Descienda en Bandcamp" style="border:0;width:350px;height:350px" src="https://bandcamp.com/EmbeddedPlayer/album=2431406544/size=large/bgcol=333333/linkcol=ffffff/minimal=true/transparent=true/" seamless><a href="https://descienda.bandcamp.com/album/-">𐤒 by DESCIENDA</a></iframe>
+      </div>
+
+      <div class="statement">
+        <p>Descienda trabaja sobre un concepto central de la mística: la chispa que olvidó su origen. Puede leerse como el recorrido del alma individual o como el de la chispa divina que comparte el exilio de la creación.</p>
+        <p>La paradoja de fondo es la de la contracción primordial: lo divino se retira para que exista algo distinto de sí mismo, pero esa alteridad produce una conciencia que se experimenta como separada. Esa tensión no se resuelve, sino que se atraviesa, estación por estación, hasta el punto en que la pregunta pierde su fundamento.</p>
+        <p>La infinitud se repliega y abre un hueco donde aparece lo separado.<br>La existencia, incapaz de sostener la totalidad, se fragmenta y queda en exilio, como el lirio entre espinos. Pero en lo más profundo de su fractura, un impulso permanece intacto.</p>
+      </div>
+    </section>
+
+    <section class="final-screen snap-screen" aria-label="Integrantes y galería">
+    <section class="members section-shell" aria-label="Integrantes">
+      <article class="member-card">
+        <img src="assets/mirada.webp" alt="Daniel Castro" />
+        <div class="member-overlay"><p>La mirada que descendió y despertó cada frecuencia desde las grietas de luz.</p></div>
+      </article>
+      <article class="member-card">
+        <img src="assets/alquimista.webp" alt="Diego Reynoso" />
+        <div class="member-overlay"><p>El alquimista que transformó la fractura en sonido, esculpiendo su eco.</p></div>
+      </article>
+      <article class="member-card">
+        <img src="assets/soplo.webp" alt="Andrea Aguilar" />
+        <div class="member-overlay"><p>El soplo que disuelve la penumbra y anuncia el retorno.</p></div>
+      </article>
+    </section>
+
+    <section class="gallery-wrap" aria-label="Galería del álbum">
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <footer class="footer section-shell">
+      <!-- Sustituya # por sus URLs reales. -->
+      <nav class="socials" aria-label="Redes sociales">
+        <a href="#" aria-label="Spotify" title="Spotify"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.58 14.42a.62.62 0 0 1-.86.2c-2.36-1.44-5.34-1.77-8.84-.97a.625.625 0 1 1-.28-1.22c3.83-.87 7.12-.49 9.78 1.13.3.18.39.57.2.86Zm1.23-2.73a.78.78 0 0 1-1.08.26c-2.7-1.66-6.82-2.14-10.02-1.17a.78.78 0 1 1-.45-1.5c3.65-1.1 8.19-.57 11.3 1.34.37.22.48.7.25 1.07Zm.1-2.84C14.67 8.92 9.34 8.74 6.25 9.67a.94.94 0 1 1-.54-1.79c3.55-1.07 9.44-.85 13.16 1.36a.94.94 0 0 1-.96 1.61Z"/></svg></a>
+        <a href="#" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm10.5 1.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></a>
+        <a href="#" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z"/></svg></a>
+      </nav>
+      <p class="copyright">© 2026 DESCIENDA</p>
+    </footer>
+    </section>
+  </main>
+
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">×</button>
+    <div class="modal-inner">
+      <img id="modalImage" alt="" />
+      <div class="modal-copy"><p id="modalText"></p></div>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
