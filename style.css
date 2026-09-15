@@ -177,3 +177,22 @@ body{scroll-snap-type:y mandatory}
     width:33.3333333333%!important;
   }
 }
+
+
+/* ===== v12 — mobile gallery touch interaction ===== */
+@media(max-width:800px){
+  .final-screen .gallery{
+    touch-action:pan-y pinch-zoom!important;
+    cursor:grab;
+    user-select:none;
+    -webkit-user-select:none;
+    will-change:transform;
+  }
+  .final-screen .gallery:active{cursor:grabbing;}
+  .final-screen .gallery-item,
+  .final-screen .gallery-item img{
+    -webkit-user-drag:none;
+    user-select:none;
+    -webkit-user-select:none;
+  }
+}

@@ -98,72 +98,180 @@ if(canvas && !reduced){
   setTimeout(tracking,1000);
 })();
 
-/* v10 — Mobile gallery: seamless 3-up infinite carousel.
-   There are exactly 11 real artworks. Clones exist only inside the mobile
-   moving track so after artwork 11 the sequence continues with artwork 1. */
+
+/* v12 — Mobile gallery: autoplay + finger drag/swipe, seamless 11→1 loop. */
 (() => {
   const gallery = document.getElementById('gallery');
   if (!gallery) return;
-  const mobile = matchMedia('(max-width: 800px)');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let timer = null, index = 0, prepared = false;
 
-  const realItems = () => [...gallery.children].filter(el => !el.dataset.carouselClone);
+  const mobile = window.matchMedia('(max-width: 800px)');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const REAL_COUNT = 11;
+  const STEP = 100 / 3;
+  const AUTOPLAY_MS = 3000;
+  const TRANSITION_MS = 650;
 
-  function clearClones(){
-    [...gallery.querySelectorAll('[data-carousel-clone]')].forEach(el => el.remove());
-    prepared=false; index=0; gallery.style.transition=''; gallery.style.transform='';
-  }
+  let index = 0;
+  let timer = null;
+  let prepared = false;
+  let dragging = false;
+  let pointerId = null;
+  let startX = 0;
+  let currentX = 0;
+  let startTranslate = 0;
 
-  function prepare(){
-    clearClones();
-    if(!mobile.matches) return;
-    const items=realItems();
-    if(items.length!==11) return;
-    // Append the first three. Thus the final visible states are 10,11,1 and
-    // 11,1,2 before snapping invisibly back to 1,2,3.
-    items.slice(0,3).forEach(item=>{
-      const clone=item.cloneNode(true);
-      clone.dataset.carouselClone='true';
-      clone.setAttribute('aria-hidden','true');
-      clone.tabIndex=-1;
-      clone.addEventListener('click',()=>item.click());
+  const realItems = () =>
+    [...gallery.children].filter(el => !el.hasAttribute('data-carousel-clone'));
+
+  const setTransition = (on) => {
+    gallery.style.transition = on
+      ? `transform ${TRANSITION_MS}ms cubic-bezier(.22,.61,.36,1)`
+      : 'none';
+  };
+
+  const translateTo = (percent) => {
+    gallery.style.transform = `translate3d(${percent}%,0,0)`;
+  };
+
+  const goTo = (nextIndex, animate = true) => {
+    index = nextIndex;
+    setTransition(animate);
+    translateTo(-(index * STEP));
+  };
+
+  const removeClones = () => {
+    gallery.querySelectorAll('[data-carousel-clone]').forEach(el => el.remove());
+  };
+
+  function prepare() {
+    stopAutoplay();
+    removeClones();
+    prepared = false;
+    index = 0;
+    setTransition(false);
+    translateTo(0);
+
+    if (!mobile.matches) return;
+
+    const items = realItems();
+    if (items.length !== REAL_COUNT) return;
+
+    /* Three leading clones allow 9→10→11→1→2 without a visible jump. */
+    items.slice(0, 3).forEach(item => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute('data-carousel-clone', 'true');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.tabIndex = -1;
+      clone.addEventListener('click', () => item.click());
       gallery.appendChild(clone);
     });
-    prepared=true;
-    gallery.style.transition='none';
-    gallery.style.transform='translate3d(0,0,0)';
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      gallery.style.transition='transform .9s cubic-bezier(.22,.61,.36,1)';
-    }));
+
+    prepared = true;
+    requestAnimationFrame(() => setTransition(true));
   }
 
-  function move(){
-    if(!prepared) return;
-    index++;
-    gallery.style.transform=`translate3d(-${index*33.3333333333}%,0,0)`;
-    // index 11 displays clones 1,2,3. After its transition, reset to the
-    // identical real 1,2,3 frame without any visible jump.
-    if(index===11){
-      setTimeout(()=>{
-        gallery.style.transition='none';
-        index=0;
-        gallery.style.transform='translate3d(0,0,0)';
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{
-          gallery.style.transition='transform .9s cubic-bezier(.22,.61,.36,1)';
-        }));
-      },930);
+  function normalizeAfterEnd() {
+    if (index >= REAL_COUNT) {
+      setTransition(false);
+      index = 0;
+      translateTo(0);
+      requestAnimationFrame(() => requestAnimationFrame(() => setTransition(true)));
     }
   }
 
-  function stop(){ if(timer) clearInterval(timer); timer=null; }
-  function start(){
-    stop(); prepare();
-    if(!mobile.matches || reduced.matches) return;
-    timer=setInterval(move,3000);
+  function next() {
+    if (!prepared || dragging) return;
+    goTo(index + 1, true);
   }
 
-  mobile.addEventListener?.('change',start);
-  document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
-  start();
+  function previous() {
+    if (!prepared || dragging) return;
+    if (index > 0) {
+      goTo(index - 1, true);
+      return;
+    }
+
+    /* Jump invisibly to the equivalent cloned position, then animate backward. */
+    setTransition(false);
+    index = REAL_COUNT;
+    translateTo(-(index * STEP));
+    requestAnimationFrame(() => requestAnimationFrame(() => goTo(REAL_COUNT - 1, true)));
+  }
+
+  function stopAutoplay() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    if (!prepared || !mobile.matches || reduced.matches || document.hidden) return;
+    timer = setInterval(next, AUTOPLAY_MS);
+  }
+
+  gallery.addEventListener('transitionend', (e) => {
+    if (e.propertyName !== 'transform') return;
+    normalizeAfterEnd();
+  });
+
+  gallery.addEventListener('pointerdown', (e) => {
+    if (!prepared || !mobile.matches) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+    dragging = true;
+    pointerId = e.pointerId;
+    startX = currentX = e.clientX;
+    startTranslate = -(index * STEP);
+    stopAutoplay();
+    setTransition(false);
+
+    try { gallery.setPointerCapture(pointerId); } catch (_) {}
+  });
+
+  gallery.addEventListener('pointermove', (e) => {
+    if (!dragging || e.pointerId !== pointerId) return;
+    currentX = e.clientX;
+    const dx = currentX - startX;
+    const width = gallery.parentElement?.clientWidth || gallery.clientWidth || 1;
+    const deltaPercent = (dx / width) * 100;
+    translateTo(startTranslate + deltaPercent);
+  });
+
+  function finishDrag(e) {
+    if (!dragging || (e && e.pointerId !== pointerId)) return;
+
+    const dx = currentX - startX;
+    const width = gallery.parentElement?.clientWidth || gallery.clientWidth || 1;
+    const threshold = Math.min(70, width * 0.14);
+
+    dragging = false;
+    try { gallery.releasePointerCapture(pointerId); } catch (_) {}
+    pointerId = null;
+
+    if (dx <= -threshold) next();
+    else if (dx >= threshold) previous();
+    else goTo(index, true);
+
+    window.setTimeout(startAutoplay, TRANSITION_MS + 250);
+  }
+
+  gallery.addEventListener('pointerup', finishDrag);
+  gallery.addEventListener('pointercancel', finishDrag);
+
+  /* Keep vertical page scrolling native while allowing horizontal swipes. */
+  gallery.style.touchAction = 'pan-y pinch-zoom';
+
+  const restart = () => {
+    prepare();
+    startAutoplay();
+  };
+
+  if (mobile.addEventListener) mobile.addEventListener('change', restart);
+  if (reduced.addEventListener) reduced.addEventListener('change', restart);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAutoplay();
+    else startAutoplay();
+  });
+
+  restart();
 })();
