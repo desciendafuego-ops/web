@@ -196,3 +196,154 @@ body{scroll-snap-type:y mandatory}
     -webkit-user-select:none;
   }
 }
+
+
+/* v13 — gallery hover: darkness only */
+.gallery-item,.gallery-item:hover,.gallery-item:focus,.gallery-item:focus-visible{
+  border:none!important; outline:none!important; box-shadow:none!important;
+}
+.gallery-item img,.gallery-item:hover img,.gallery-item:focus img,.gallery-item:focus-visible img{
+  transform:none!important;
+}
+@media (hover:hover) and (pointer:fine){
+  .gallery-item img{filter:brightness(1)!important;transition:filter .28s ease!important;}
+  .gallery-item:hover img{filter:brightness(.38)!important;}
+}
+
+
+/* ===== v14 — gallery: absolutely no visible frame/border ===== */
+.final-screen .gallery,
+.final-screen .gallery-item,
+.final-screen .gallery-item:hover,
+.final-screen .gallery-item:focus,
+.final-screen .gallery-item:focus-visible,
+.final-screen .gallery-item:active,
+.final-screen .gallery-item img,
+.final-screen .gallery-item:hover img {
+  border: 0 !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.final-screen .gallery-item::before,
+.final-screen .gallery-item::after {
+  content: none !important;
+  display: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.final-screen .gallery-item {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.final-screen .gallery-item img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .final-screen .gallery-item img {
+    filter: brightness(1) !important;
+    transition: filter .28s ease !important;
+  }
+  .final-screen .gallery-item:hover img {
+    filter: brightness(.38) !important;
+    transform: none !important;
+  }
+}
+
+/* v16 — gallery modal text slightly smaller */
+.modal-text{font-size:13px!important;line-height:1.55!important;}
+
+
+/* ===== v17 — unified body/caption typography ===== */
+.modal-text,
+.modal-text p,
+.copy,
+.copy p,
+.album-copy,
+.album-copy p,
+.description,
+.description p,
+.bandcamp-copy,
+.bandcamp-copy p,
+.about-copy,
+.about-copy p {
+  font-size:10px!important;
+}
+
+/* Gallery modal keeps its existing justified treatment. */
+.modal-text,
+.modal-text p {
+  line-height:1.55!important;
+}
+
+
+/* ===== v18 — EXACT same font size: gallery copy = member captions ===== */
+#modalText,
+#modalText *,
+.modal-text,
+.modal-text *,
+.gallery-modal .modal-text,
+.gallery-modal .modal-text *,
+.modal-content .modal-text,
+.modal-content .modal-text *,
+.modal-copy,
+.modal-copy *,
+.gallery-copy,
+.gallery-copy * {
+  font-size: 10px !important;
+  line-height: 1.45 !important;
+}
+
+/* Member captions use this exact same size. */
+.member-overlay p,
+.member-overlay p * {
+  font-size: 10px !important;
+}
+
+
+/* ===== v19 — unified readable text sizing in rem ===== */
+#modalText,
+#modalText *,
+.modal-text,
+.modal-text *,
+.gallery-modal .modal-text,
+.gallery-modal .modal-text *,
+.modal-content .modal-text,
+.modal-content .modal-text *,
+.modal-copy,
+.modal-copy *,
+.gallery-copy,
+.gallery-copy *,
+.member-overlay p,
+.member-overlay p *,
+.copy,
+.copy *,
+.album-copy,
+.album-copy *,
+.description,
+.description *,
+.bandcamp-copy,
+.bandcamp-copy *,
+.about-copy,
+.about-copy * {
+  font-size: 0.75rem !important;
+}
+
+#modalText,
+.modal-text,
+.gallery-modal .modal-text,
+.modal-content .modal-text,
+.modal-copy,
+.gallery-copy {
+  line-height: 1.55 !important;
+}
