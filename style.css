@@ -347,3 +347,575 @@ body{scroll-snap-type:y mandatory}
 .gallery-copy {
   line-height: 1.55 !important;
 }
+
+
+/* ===== v20 — expanded gallery image capped at 600px ===== */
+.modal-image,
+.gallery-modal .modal-image,
+.modal-content .modal-image,
+#modalImage {
+  width: min(600px, 48vw) !important;
+  height: min(600px, 48vw) !important;
+  max-width: 600px !important;
+  max-height: 600px !important;
+  object-fit: cover !important;
+  flex: 0 0 auto !important;
+}
+
+@media(max-width:800px){
+  .modal-image,
+  .gallery-modal .modal-image,
+  .modal-content .modal-image,
+  #modalImage {
+    width: min(600px, 86vw) !important;
+    height: min(600px, 86vw) !important;
+  }
+}
+
+
+/* ===== v21 — compact expanded-gallery layout ===== */
+/* Keep the 600px image, but make the modal content hug image + text
+   instead of stretching across the old wide container. */
+.modal-content,
+.gallery-modal .modal-content {
+  width: fit-content !important;
+  max-width: calc(100vw - 48px) !important;
+  grid-template-columns: 600px minmax(260px, 320px) !important;
+  column-gap: 48px !important;
+  justify-content: center !important;
+}
+
+.modal-text,
+.gallery-modal .modal-text {
+  width: 100% !important;
+  max-width: 320px !important;
+  margin: 0 !important;
+  align-self: center !important;
+}
+
+@media(max-width:1050px){
+  .modal-content,
+  .gallery-modal .modal-content {
+    grid-template-columns: minmax(0,600px) minmax(220px,300px) !important;
+    column-gap: 32px !important;
+  }
+}
+
+@media(max-width:800px){
+  .modal-content,
+  .gallery-modal .modal-content {
+    width: min(92vw,600px) !important;
+    max-width: 92vw !important;
+    grid-template-columns: 1fr !important;
+    row-gap: 24px !important;
+  }
+  .modal-text,
+  .gallery-modal .modal-text {
+    max-width: 100% !important;
+  }
+}
+
+
+/* ===== v22 — REAL modal layout container: remove the dead horizontal space ===== */
+.modal-card {
+  width: auto !important;
+  max-width: calc(100vw - 64px) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 32px !important;
+  grid-template-columns: none !important;
+}
+
+.modal-card .modal-image,
+.modal-card #modalImage {
+  flex: 0 0 600px !important;
+  width: 600px !important;
+  height: 600px !important;
+  max-width: 600px !important;
+  max-height: 600px !important;
+  margin: 0 !important;
+}
+
+.modal-card .modal-text,
+.modal-card #modalText {
+  flex: 0 0 320px !important;
+  width: 320px !important;
+  max-width: 320px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+@media(max-width:1020px){
+  .modal-card {
+    gap: 24px !important;
+  }
+  .modal-card .modal-image,
+  .modal-card #modalImage {
+    flex-basis: min(58vw,600px) !important;
+    width: min(58vw,600px) !important;
+    height: min(58vw,600px) !important;
+  }
+  .modal-card .modal-text,
+  .modal-card #modalText {
+    flex: 1 1 260px !important;
+    width: auto !important;
+  }
+}
+
+@media(max-width:800px){
+  .modal-card {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .modal-card .modal-image,
+  .modal-card #modalImage {
+    flex: 0 0 auto !important;
+    width: min(86vw,600px) !important;
+    height: min(86vw,600px) !important;
+  }
+  .modal-card .modal-text,
+  .modal-card #modalText {
+    flex: 0 0 auto !important;
+    width: min(86vw,600px) !important;
+    max-width: min(86vw,600px) !important;
+  }
+}
+
+
+/* ===== v23 — FIX REAL MODAL STRUCTURE =====
+   Actual markup: .modal-inner > #modalImage + .modal-copy
+*/
+.modal .modal-inner {
+  width: auto !important;
+  max-width: calc(100vw - 64px) !important;
+  display: grid !important;
+  grid-template-columns: 600px 320px !important;
+  column-gap: 32px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(8,8,8,.96) !important;
+}
+
+.modal .modal-inner > #modalImage {
+  width: 600px !important;
+  height: 600px !important;
+  max-width: 600px !important;
+  max-height: 600px !important;
+  margin: 0 !important;
+  display: block !important;
+  object-fit: cover !important;
+}
+
+.modal .modal-inner > .modal-copy {
+  width: 320px !important;
+  max-width: 320px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  align-self: center !important;
+}
+
+.modal .modal-inner > .modal-copy #modalText {
+  margin: 0 !important;
+}
+
+/* Scale proportionally before switching to the stacked mobile layout. */
+@media (max-width: 1040px) and (min-width: 801px) {
+  .modal .modal-inner {
+    grid-template-columns: min(58vw,600px) minmax(220px,300px) !important;
+    column-gap: 24px !important;
+  }
+  .modal .modal-inner > #modalImage {
+    width: min(58vw,600px) !important;
+    height: min(58vw,600px) !important;
+  }
+  .modal .modal-inner > .modal-copy {
+    width: 100% !important;
+    max-width: 300px !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .modal .modal-inner {
+    width: min(90vw,600px) !important;
+    max-width: 90vw !important;
+    grid-template-columns: 1fr !important;
+    row-gap: 20px !important;
+  }
+  .modal .modal-inner > #modalImage {
+    width: min(86vw,600px) !important;
+    height: min(86vw,600px) !important;
+    max-width: 100% !important;
+    justify-self: center !important;
+  }
+  .modal .modal-inner > .modal-copy {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 4px 20px !important;
+  }
+}
+
+
+/* ===== v24 — gallery modal: balanced 600px image + fully visible copy ===== */
+.modal {
+  overflow-y: auto !important;
+  padding: 32px !important;
+  box-sizing: border-box !important;
+}
+
+.modal .modal-inner {
+  width: min(1080px, calc(100vw - 64px)) !important;
+  max-width: min(1080px, calc(100vw - 64px)) !important;
+  height: auto !important;
+  min-height: 600px !important;
+  max-height: none !important;
+  overflow: visible !important;
+
+  display: grid !important;
+  grid-template-columns: 600px minmax(0, 1fr) !important;
+  column-gap: 48px !important;
+  align-items: stretch !important;
+  justify-content: start !important;
+}
+
+.modal .modal-inner > #modalImage {
+  width: 600px !important;
+  height: 600px !important;
+  max-width: 600px !important;
+  max-height: 600px !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+  align-self: start !important;
+}
+
+.modal .modal-inner > .modal-copy {
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 600px !important;
+  max-height: none !important;
+  overflow: visible !important;
+
+  box-sizing: border-box !important;
+  padding: 40px 0 !important;
+  margin: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+}
+
+.modal .modal-inner > .modal-copy > #modalText {
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.modal .modal-inner > .modal-copy > #modalText p {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Medium desktop: shrink image and preserve enough width for the copy. */
+@media (max-width: 1140px) and (min-width: 801px) {
+  .modal .modal-inner {
+    width: calc(100vw - 64px) !important;
+    max-width: calc(100vw - 64px) !important;
+    min-height: min(54vw, 600px) !important;
+    grid-template-columns: min(54vw, 600px) minmax(280px, 1fr) !important;
+    column-gap: 32px !important;
+  }
+
+  .modal .modal-inner > #modalImage {
+    width: min(54vw, 600px) !important;
+    height: min(54vw, 600px) !important;
+  }
+
+  .modal .modal-inner > .modal-copy {
+    min-height: min(54vw, 600px) !important;
+    padding: 24px 0 !important;
+  }
+}
+
+/* Mobile: stack naturally; never clip the text. */
+@media (max-width: 800px) {
+  .modal {
+    padding: 20px !important;
+    align-items: flex-start !important;
+  }
+
+  .modal .modal-inner {
+    width: min(600px, calc(100vw - 40px)) !important;
+    max-width: min(600px, calc(100vw - 40px)) !important;
+    min-height: 0 !important;
+    grid-template-columns: 1fr !important;
+    row-gap: 20px !important;
+    overflow: visible !important;
+  }
+
+  .modal .modal-inner > #modalImage {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    max-width: 600px !important;
+    max-height: none !important;
+  }
+
+  .modal .modal-inner > .modal-copy {
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 4px 24px !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .modal .modal-inner > .modal-copy > #modalText {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+
+/* ===== v25 — modal rebuilt to match the supplied GOOD reference ===== */
+.modal{
+  box-sizing:border-box!important;
+  padding:32px!important;
+  overflow:auto!important;
+}
+
+.modal .modal-inner{
+  box-sizing:border-box!important;
+  width:1120px!important;
+  max-width:calc(100vw - 64px)!important;
+  height:600px!important;
+  min-height:600px!important;
+  max-height:600px!important;
+  overflow:hidden!important;
+
+  display:grid!important;
+  grid-template-columns:600px minmax(0,520px)!important;
+  grid-template-rows:600px!important;
+  gap:0!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+}
+
+.modal .modal-inner > #modalImage{
+  box-sizing:border-box!important;
+  width:600px!important;
+  height:600px!important;
+  min-width:0!important;
+  max-width:600px!important;
+  min-height:0!important;
+  max-height:600px!important;
+  margin:0!important;
+  padding:0!important;
+  display:block!important;
+  object-fit:cover!important;
+}
+
+.modal .modal-inner > .modal-copy{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:600px!important;
+  min-height:600px!important;
+  max-height:600px!important;
+  margin:0!important;
+  padding:48px 40px!important;
+  overflow:hidden!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+.modal .modal-inner > .modal-copy > #modalText{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:440px!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0 auto!important;
+  padding:0!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+
+.modal .modal-inner > .modal-copy > #modalText p{
+  width:auto!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+
+/* Scale the complete panel as a unit on narrower desktop screens. */
+@media (max-width:1184px) and (min-width:801px){
+  .modal .modal-inner{
+    width:calc(100vw - 64px)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    grid-template-columns:minmax(0,56%) minmax(0,44%)!important;
+    grid-template-rows:auto!important;
+  }
+  .modal .modal-inner > #modalImage{
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:1/1!important;
+    max-width:none!important;
+    max-height:none!important;
+  }
+  .modal .modal-inner > .modal-copy{
+    height:auto!important;
+    min-height:100%!important;
+    max-height:none!important;
+    padding:32px!important;
+  }
+}
+
+/* Mobile: image above copy, with all text visible. */
+@media (max-width:800px){
+  .modal{
+    padding:20px!important;
+    align-items:flex-start!important;
+  }
+  .modal .modal-inner{
+    width:min(600px,calc(100vw - 40px))!important;
+    max-width:calc(100vw - 40px)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    overflow:visible!important;
+  }
+  .modal .modal-inner > #modalImage{
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:1/1!important;
+    max-width:none!important;
+    max-height:none!important;
+  }
+  .modal .modal-inner > .modal-copy{
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:28px 20px!important;
+    overflow:visible!important;
+    display:block!important;
+  }
+  .modal .modal-inner > .modal-copy > #modalText{
+    max-width:none!important;
+  }
+}
+
+
+/* ===== v26 — compact copy panel + real paragraph spacing ===== */
+.modal .modal-inner{
+  width:960px!important;
+  max-width:calc(100vw - 64px)!important;
+  height:600px!important;
+  min-height:600px!important;
+  max-height:600px!important;
+  grid-template-columns:600px 360px!important;
+  grid-template-rows:600px!important;
+  gap:0!important;
+}
+
+.modal .modal-inner > .modal-copy{
+  width:360px!important;
+  height:600px!important;
+  min-height:600px!important;
+  max-height:600px!important;
+  padding:36px 28px!important;
+  overflow:visible!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+.modal .modal-inner > .modal-copy > #modalText{
+  width:100%!important;
+  max-width:304px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+
+.modal .modal-inner > .modal-copy > #modalText p{
+  display:block!important;
+  margin:0 0 1.25rem 0!important;
+  padding:0!important;
+}
+.modal .modal-inner > .modal-copy > #modalText p:last-child{
+  margin-bottom:0!important;
+}
+
+@media (max-width:1024px) and (min-width:801px){
+  .modal .modal-inner{
+    width:calc(100vw - 64px)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    grid-template-columns:minmax(0,62%) minmax(0,38%)!important;
+    grid-template-rows:auto!important;
+  }
+  .modal .modal-inner > #modalImage{
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:1/1!important;
+    max-width:none!important;
+    max-height:none!important;
+  }
+  .modal .modal-inner > .modal-copy{
+    width:100%!important;
+    height:auto!important;
+    min-height:100%!important;
+    max-height:none!important;
+    padding:28px 24px!important;
+  }
+  .modal .modal-inner > .modal-copy > #modalText{
+    max-width:none!important;
+  }
+}
+
+@media (max-width:800px){
+  .modal .modal-inner{
+    width:min(600px,calc(100vw - 40px))!important;
+    max-width:calc(100vw - 40px)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+  }
+  .modal .modal-inner > .modal-copy{
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:28px 20px!important;
+  }
+  .modal .modal-inner > .modal-copy > #modalText{
+    max-width:none!important;
+  }
+}

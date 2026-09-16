@@ -33,7 +33,10 @@ const copy=[
 const gallery=$('#gallery'),modal=$('#modal'),modalImage=$('#modalImage'),modalText=$('#modalText');
 if(gallery){
  gallery.replaceChildren();
- copy.forEach((text,i)=>{const b=document.createElement('button');b.type='button';b.className='gallery-item';b.setAttribute('aria-label','Abrir imagen');const img=new Image();img.src=`assets/gallery/${i+1}.webp`;img.alt='';img.loading='lazy';img.draggable=false;b.append(img);b.addEventListener('click',()=>{modalImage.src=img.src;modalText.textContent=text;modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open')});gallery.append(b)});
+ copy.forEach((text,i)=>{const b=document.createElement('button');b.type='button';b.className='gallery-item';b.setAttribute('aria-label','Abrir imagen');const img=new Image();img.src=`assets/gallery/${i+1}.webp`;img.alt='';img.loading='lazy';img.draggable=false;b.append(img);b.addEventListener('click',()=>{modalImage.src=img.src;modalText.innerHTML = copy[i]
+      .split(/\n\s*\n/)
+      .map(paragraph => `<p>${paragraph}</p>`)
+      .join('');modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open')});gallery.append(b)});
 }
 const close=()=>{modal?.classList.remove('open');modal?.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open')};
 $('#modalClose')?.addEventListener('click',close);modal?.addEventListener('click',e=>{if(e.target===modal)close()});addEventListener('keydown',e=>{if(e.key==='Escape')close()});
