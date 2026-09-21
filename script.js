@@ -16,30 +16,22 @@ if(socials) socials.innerHTML=`
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>{if(e.target.closest('img'))e.preventDefault()});
 
-// Gallery: always built with plain JS; no dependency can prevent it rendering.
-const copy=[
-  "El punto de partida es el exilio ya consumado. El alma despierta dentro de la multiplicidad y, antes de comprender qué significa esa condición, descubre que le gusta. La separación comprende el sufrimiento y la experiencia de poder decir «yo» por primera vez. Por eso el regreso la aterra.\n\nLa enseñanza subyacente es la del mundo de Tohu: cada fuerza que existe solo para sí misma reproduce el fracaso de los Reyes de Edom, que reinaban sin poder relacionarse. El alma desea la redención y teme su precio.",
-  "Aquí se expone la raíz del problema. La contracción divina genera una conciencia que vive como si existiera un lugar fuera de Dios. La distinción es decisiva: la ilusión reside en la pretensión de independencia de un mundo real.\n\nEl conocimiento debe llegar del símbolo al mandamiento, a la acción concreta. Sin esa concreción, el alma sigue girando sobre lo mismo sin rectificar nada. La voz interior la llama a encontrar la presencia divina dentro del mundo.",
-  "La ruptura cosmológica, acontecimiento primordial, sucede también dentro del alma. La imagen de la estrella muerta que sigue enviando luz plantea una pregunta sobre la identidad: ¿qué parte del yo que se observa a sí mismo es ya imagen sin sustancia?\n\nLa tradición define la fortaleza como dominio sobre la propia inclinación. Ese giro dirige hacia el interior la soberanía que el alma buscaba ejercer sobre el exterior.",
-  "El becerro de oro es la forma permanente de un error: fabricar una fuente de luz manejable cuando la revelación verdadera se vuelve silenciosa.\n\nEl lirio entre los espinos sostiene una enseñanza sobre la santidad: su pureza comprende la capacidad de atravesar el conflicto y contener la tensión entre fuerzas sin romperse. La rectificación encuentra la chispa encerrada en lo oscuro sin expulsarlo.",
-  "Después de la idolatría y la confusión sobre la autenticidad de la revelación, el alma atraviesa el juicio: experimenta el peso de los actos y la exigencia moral que permanece en la unidad.\n\nLa mística sitúa el rigor en una estructura mayor que incluye la compasión y conserva la función de ambos. Ese silencio es la suspensión necesaria antes de que pueda comenzar algo nuevo.",
-  "El alma implora por el fuego de la contemplación. La petición «del cielo, descienda fuego» trabaja sobre la enseñanza del Libro de la Formación, que describe la estructura del ser como una llama unida a su brasa, con el final contenido en el principio.\n\nLa pregunta «antes del Uno, ¿qué cuentas?» impide situar a Dios como primero de una serie. El alma puede preparar el recipiente para recibir un contenido que permanece fuera del alcance de la fuerza y de la fabricación.",
-  "El séptimo día, implica una alteración del estado de la conciencia. Tras los seis días regidos por el hacer, el séptimo enseña a recibir.\n\nSu vinculación con la sefirah de Biná, la Madre Superior, lo sitúa en el nivel del entendimiento profundo, anterior al análisis y la separación. El alma adicional se recibe en Shabbat mediante una apertura de la conciencia. Esa apertura es condición para que surja la armonía.",
-  "Tiferet, Belleza o Armonía, opera como síntesis: su función en el Árbol es articular el amor expansivo y el rigor limitante, preservando las cualidades de ambos.\n\nLa unidad requiere aprender a sostener conjuntamente esas fuerzas y su tensión. La disolución del dualismo metafísico revela una única fuente última del ser y conserva la relevancia de las distinciones éticas entre el bien y el mal.",
-  "La noche oscura del alma, en términos cabalísticos, es el momento en que el yo ya no puede sostenerse en sus propias formas. La raíz del alma es anterior a la identidad construida; llegar hasta ella implica que lo superficial se derrumbe.\n\nInterpretar el dolor desde la separación absoluta produce una lectura falsa de lo ocurrido. «Todo este dolor fue artificial» cuestiona el marco desde el que se vivió un sufrimiento real.",
-  "La anulación del yo separado consiste en una rendición que preserva la existencia. Los Reyes de Edom abrieron el recorrido como figura del fracaso. Aquí, la entrega del trono expresa la renuncia del alma a aferrarse a él.\n\nEl alma abandona la fantasía de ser la fuente del propio ser y conserva la existencia y la responsabilidad moral. La voz que había hablado desde el exilio se disuelve porque la posición desde la que hablaba ya no se sostiene.",
-  "La unicidad de Dios es ontológica e irreductible al número.\n\n«Ellos no son» expresa la dependencia ontológica del mundo real. El conocimiento que propone el cierre consiste en el vínculo que une a quien conoce con lo conocido.\n\nLa chispa reconoce su caída y descubre que siempre permaneció dentro de aquello a lo que intentaba regresar."
-];
-const gallery=$('#gallery'),modal=$('#modal'),modalImage=$('#modalImage'),modalText=$('#modalText');
+// Gallery: static images only. No text, modal, click, hover action, autoplay or swipe behavior.
+const gallery=$('#gallery');
 if(gallery){
- gallery.replaceChildren();
- copy.forEach((text,i)=>{const b=document.createElement('button');b.type='button';b.className='gallery-item';b.setAttribute('aria-label','Abrir imagen');const img=new Image();img.src=`assets/gallery/${i+1}.webp`;img.alt='';img.loading='lazy';img.draggable=false;b.append(img);b.addEventListener('click',()=>{modalImage.src=img.src;modalText.innerHTML = copy[i]
-      .split(/\n\s*\n/)
-      .map(paragraph => `<p>${paragraph}</p>`)
-      .join('');modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open')});gallery.append(b)});
+  gallery.replaceChildren();
+  for(let i=1;i<=11;i++){
+    const item=document.createElement('div');
+    item.className='gallery-item';
+    const img=new Image();
+    img.src=`assets/gallery/${i}.webp`;
+    img.alt='';
+    img.loading='lazy';
+    img.draggable=false;
+    item.append(img);
+    gallery.append(item);
+  }
 }
-const close=()=>{modal?.classList.remove('open');modal?.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open')};
-$('#modalClose')?.addEventListener('click',close);modal?.addEventListener('click',e=>{if(e.target===modal)close()});addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 
 // Text glitches: irregular bursts, not a repetitive CSS loop.
 $$('.glitch-text').forEach(el=>{if(!el.dataset.text)el.dataset.text=el.innerText.replace(/\n/g,' ')});
@@ -99,182 +91,4 @@ if(canvas && !reduced){
     setTimeout(tracking,2800+Math.random()*5200);
   }
   setTimeout(tracking,1000);
-})();
-
-
-/* v12 — Mobile gallery: autoplay + finger drag/swipe, seamless 11→1 loop. */
-(() => {
-  const gallery = document.getElementById('gallery');
-  if (!gallery) return;
-
-  const mobile = window.matchMedia('(max-width: 800px)');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const REAL_COUNT = 11;
-  const STEP = 100 / 3;
-  const AUTOPLAY_MS = 3000;
-  const TRANSITION_MS = 650;
-
-  let index = 0;
-  let timer = null;
-  let prepared = false;
-  let dragging = false;
-  let pointerId = null;
-  let startX = 0;
-  let currentX = 0;
-  let startTranslate = 0;
-
-  const realItems = () =>
-    [...gallery.children].filter(el => !el.hasAttribute('data-carousel-clone'));
-
-  const setTransition = (on) => {
-    gallery.style.transition = on
-      ? `transform ${TRANSITION_MS}ms cubic-bezier(.22,.61,.36,1)`
-      : 'none';
-  };
-
-  const translateTo = (percent) => {
-    gallery.style.transform = `translate3d(${percent}%,0,0)`;
-  };
-
-  const goTo = (nextIndex, animate = true) => {
-    index = nextIndex;
-    setTransition(animate);
-    translateTo(-(index * STEP));
-  };
-
-  const removeClones = () => {
-    gallery.querySelectorAll('[data-carousel-clone]').forEach(el => el.remove());
-  };
-
-  function prepare() {
-    stopAutoplay();
-    removeClones();
-    prepared = false;
-    index = 0;
-    setTransition(false);
-    translateTo(0);
-
-    if (!mobile.matches) return;
-
-    const items = realItems();
-    if (items.length !== REAL_COUNT) return;
-
-    /* Three leading clones allow 9→10→11→1→2 without a visible jump. */
-    items.slice(0, 3).forEach(item => {
-      const clone = item.cloneNode(true);
-      clone.setAttribute('data-carousel-clone', 'true');
-      clone.setAttribute('aria-hidden', 'true');
-      clone.tabIndex = -1;
-      clone.addEventListener('click', () => item.click());
-      gallery.appendChild(clone);
-    });
-
-    prepared = true;
-    requestAnimationFrame(() => setTransition(true));
-  }
-
-  function normalizeAfterEnd() {
-    if (index >= REAL_COUNT) {
-      setTransition(false);
-      index = 0;
-      translateTo(0);
-      requestAnimationFrame(() => requestAnimationFrame(() => setTransition(true)));
-    }
-  }
-
-  function next() {
-    if (!prepared || dragging) return;
-    goTo(index + 1, true);
-  }
-
-  function previous() {
-    if (!prepared || dragging) return;
-    if (index > 0) {
-      goTo(index - 1, true);
-      return;
-    }
-
-    /* Jump invisibly to the equivalent cloned position, then animate backward. */
-    setTransition(false);
-    index = REAL_COUNT;
-    translateTo(-(index * STEP));
-    requestAnimationFrame(() => requestAnimationFrame(() => goTo(REAL_COUNT - 1, true)));
-  }
-
-  function stopAutoplay() {
-    if (timer) clearInterval(timer);
-    timer = null;
-  }
-
-  function startAutoplay() {
-    stopAutoplay();
-    if (!prepared || !mobile.matches || reduced.matches || document.hidden) return;
-    timer = setInterval(next, AUTOPLAY_MS);
-  }
-
-  gallery.addEventListener('transitionend', (e) => {
-    if (e.propertyName !== 'transform') return;
-    normalizeAfterEnd();
-  });
-
-  gallery.addEventListener('pointerdown', (e) => {
-    if (!prepared || !mobile.matches) return;
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-
-    dragging = true;
-    pointerId = e.pointerId;
-    startX = currentX = e.clientX;
-    startTranslate = -(index * STEP);
-    stopAutoplay();
-    setTransition(false);
-
-    try { gallery.setPointerCapture(pointerId); } catch (_) {}
-  });
-
-  gallery.addEventListener('pointermove', (e) => {
-    if (!dragging || e.pointerId !== pointerId) return;
-    currentX = e.clientX;
-    const dx = currentX - startX;
-    const width = gallery.parentElement?.clientWidth || gallery.clientWidth || 1;
-    const deltaPercent = (dx / width) * 100;
-    translateTo(startTranslate + deltaPercent);
-  });
-
-  function finishDrag(e) {
-    if (!dragging || (e && e.pointerId !== pointerId)) return;
-
-    const dx = currentX - startX;
-    const width = gallery.parentElement?.clientWidth || gallery.clientWidth || 1;
-    const threshold = Math.min(70, width * 0.14);
-
-    dragging = false;
-    try { gallery.releasePointerCapture(pointerId); } catch (_) {}
-    pointerId = null;
-
-    if (dx <= -threshold) next();
-    else if (dx >= threshold) previous();
-    else goTo(index, true);
-
-    window.setTimeout(startAutoplay, TRANSITION_MS + 250);
-  }
-
-  gallery.addEventListener('pointerup', finishDrag);
-  gallery.addEventListener('pointercancel', finishDrag);
-
-  /* Keep vertical page scrolling native while allowing horizontal swipes. */
-  gallery.style.touchAction = 'pan-y pinch-zoom';
-
-  const restart = () => {
-    prepare();
-    startAutoplay();
-  };
-
-  if (mobile.addEventListener) mobile.addEventListener('change', restart);
-  if (reduced.addEventListener) reduced.addEventListener('change', restart);
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopAutoplay();
-    else startAutoplay();
-  });
-
-  restart();
 })();
