@@ -241,26 +241,22 @@ main {
 
 .hero-line {
   margin: 0 auto;
-
   color: #d8d1c9;
-font-size: clamp(30px, 2.5vw, 66px);
+  font-size: clamp(14px, 1.15vw, 17px);
   font-weight: 300;
-  line-height: 1.85;
-  letter-spacing: .08em;
-  text-wrap: balance;
+  line-height: 1.55;
+  letter-spacing: .04em;
 }
 
 .descienda-fire {
-  margin: 22px 0 0;
-
+  margin: 18px 0 0;
   color: var(--ember);
-  font-size: clamp(30px, 4.5vw, 66px);
+  font-size: clamp(22px, 2.5vw, 36px);
   font-weight: 200;
   line-height: 1;
   letter-spacing: .13em;
   text-transform: uppercase;
 }
-
 
 /* ---------- GLITCH TEXT ---------- */
 
