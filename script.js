@@ -1,64 +1,77 @@
 (() => {
   'use strict';
 
-  const reduced =
-    matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
 
   /* =====================================================
-     SOCIAL LINKS
+     SOCIAL NETWORKS
+     Replaces the placeholder links in the HTML.
   ===================================================== */
-
-  const links = {
-    bandcamp: 'https://descienda.bandcamp.com/',
-    spotify: 'https://open.spotify.com/intl-es/artist/0SxyaTtvftazxnKESp40g5',
-    apple: 'https://music.apple.com/us/artist/descienda/1755248660',
-    instagram: 'https://www.instagram.com/desciendafuego/',
-    youtube: 'https://music.youtube.com/channel/UCECF5P8sv1IY4-p6Udnh2Sg'
-  };
 
   const socials = document.querySelector('.socials');
 
   if (socials) {
     socials.innerHTML = `
-      <a href="${links.bandcamp}"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Bandcamp">
-        <img src="assets/bandcamp.webp" alt="">
+      <a
+        href="https://descienda.bandcamp.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Bandcamp"
+        title="Bandcamp"
+      >
+        <img
+          src="assets/bandcamp.webp"
+          alt="Bandcamp"
+          draggable="false"
+        >
       </a>
 
-      <a href="${links.spotify}"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Spotify">
+      <a
+        href="https://open.spotify.com/intl-es/artist/0SxyaTtvftazxnKESp40g5"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Spotify"
+        title="Spotify"
+      >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.58 14.42a.62.62 0 0 1-.86.2c-2.36-1.44-5.34-1.77-8.84-.97a.625.625 0 1 1-.28-1.22c3.83-.87 7.12-.49 9.78 1.13.3.18.39.57.2.86Zm1.23-2.73a.78.78 0 0 1-1.08.26c-2.7-1.66-6.82-2.14-10.02-1.17a.78.78 0 1 1-.45-1.5c3.65-1.1 8.19-.57 11.3 1.34.37.22.48.7.25 1.07Zm.1-2.84C14.67 8.92 9.34 8.74 6.25 9.67a.94.94 0 1 1-.54-1.79c3.55-1.07 9.44-.85 13.16 1.36a.94.94 0 0 1-.96 1.61Z"/>
         </svg>
       </a>
 
-      <a href="${links.apple}"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Apple Music">
+      <a
+        href="https://music.apple.com/us/artist/descienda/1755248660"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Apple Music"
+        title="Apple Music"
+      >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M18.71 12.55c-.03-3.08 2.51-4.58 2.63-4.65a5.66 5.66 0 0 0-4.45-2.4c-1.87-.2-3.68 1.12-4.63 1.12-.97 0-2.43-1.1-4.01-1.07a5.9 5.9 0 0 0-4.97 3.03c-2.15 3.72-.55 9.19 1.51 12.2 1.03 1.47 2.23 3.12 3.81 3.06 1.55-.06 2.13-.98 4-.98 1.84 0 2.39.98 4 .94 1.66-.03 2.71-1.48 3.7-2.96a12.2 12.2 0 0 0 1.69-3.44 5.3 5.3 0 0 1-3.28-4.85ZM15.67 3.52A5.37 5.37 0 0 0 16.9-.35a5.47 5.47 0 0 0-3.53 1.84 5.13 5.13 0 0 0-1.27 3.73 4.52 4.52 0 0 0 3.57-1.7Z"/>
         </svg>
       </a>
 
-      <a href="${links.instagram}"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Instagram">
+      <a
+        href="https://www.instagram.com/desciendafuego/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
+        title="Instagram"
+      >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm10.5 1.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/>
         </svg>
       </a>
 
-      <a href="${links.youtube}"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="YouTube Music">
+      <a
+        href="https://music.youtube.com/channel/UCECF5P8sv1IY4-p6Udnh2Sg"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="YouTube Music"
+        title="YouTube Music"
+      >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z"/>
         </svg>
@@ -68,7 +81,7 @@
 
 
   /* =====================================================
-     IMAGE PROTECTION
+     BASIC IMAGE PROTECTION
   ===================================================== */
 
   document.addEventListener('contextmenu', event => {
@@ -83,7 +96,7 @@
 
 
   /* =====================================================
-     STOP HERE WHEN REDUCED MOTION IS ENABLED
+     STOP ANIMATIONS WHEN REDUCED MOTION IS REQUESTED
   ===================================================== */
 
   if (reduced) return;
@@ -121,7 +134,7 @@
 
 
   /* =====================================================
-     CRT IMAGE JUMP
+     CRT JUMP
   ===================================================== */
 
   function crtJump() {
@@ -154,12 +167,12 @@
      ANALOG CANVAS
   ===================================================== */
 
-  const canvas =
-    document.querySelector('#analogFx');
+  const canvas = document.querySelector('#analogFx');
 
   if (canvas) {
-    const ctx =
-      canvas.getContext('2d', { alpha: true });
+    const ctx = canvas.getContext('2d', {
+      alpha: true
+    });
 
     let width = 0;
     let height = 0;
@@ -172,24 +185,18 @@
 
     function resizeCanvas() {
       dpr = Math.min(
-        devicePixelRatio || 1,
+        window.devicePixelRatio || 1,
         1.5
       );
 
-      width = innerWidth;
-      height = innerHeight;
+      width = window.innerWidth;
+      height = window.innerHeight;
 
-      canvas.width =
-        Math.round(width * dpr);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
 
-      canvas.height =
-        Math.round(height * dpr);
-
-      canvas.style.width =
-        `${width}px`;
-
-      canvas.style.height =
-        `${height}px`;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
 
       ctx.setTransform(
         dpr,
@@ -201,14 +208,6 @@
       );
     }
 
-    resizeCanvas();
-
-    addEventListener(
-      'resize',
-      resizeCanvas,
-      { passive: true }
-    );
-
 
     function drawAnalogFrame(time) {
       ctx.clearRect(
@@ -219,7 +218,7 @@
       );
 
 
-      /* Moving luminance band */
+      /* Moving luminance bar */
 
       roll =
         (roll + .45) %
@@ -258,21 +257,16 @@
       );
 
 
-      /* Analog snow */
+      /* Sparse analog noise */
 
-      const particles =
-        Math.min(
-          220,
-          Math.floor(
-            width * height / 7000
-          )
-        );
+      const particles = Math.min(
+        220,
+        Math.floor(
+          width * height / 7000
+        )
+      );
 
-      for (
-        let i = 0;
-        i < particles;
-        i++
-      ) {
+      for (let i = 0; i < particles; i++) {
         const alpha =
           Math.random() * .055;
 
@@ -288,7 +282,7 @@
       }
 
 
-      /* Tracking glitches */
+      /* Horizontal signal dropouts */
 
       if (
         time - lastBurst >
@@ -313,11 +307,7 @@
             Math.random() * 4
           );
 
-        for (
-          let i = 0;
-          i < bands;
-          i++
-        ) {
+        for (let i = 0; i < bands; i++) {
           const y =
             Math.random() * height;
 
@@ -356,14 +346,16 @@
       }
 
 
-      /* Vertical sync flare */
+      /* Occasional vertical sync flare */
 
       if (Math.random() > .992) {
         const left =
           Math.random() > .5;
 
         const x =
-          left ? 0 : width - 10;
+          left
+            ? 0
+            : width - 10;
 
         const flare =
           ctx.createLinearGradient(
@@ -399,6 +391,15 @@
       );
     }
 
+
+    resizeCanvas();
+
+    window.addEventListener(
+      'resize',
+      resizeCanvas,
+      { passive: true }
+    );
+
     requestAnimationFrame(
       drawAnalogFrame
     );
@@ -406,13 +407,11 @@
 
 
   /* =====================================================
-     BACKGROUND DRIFT
+     BACKGROUND MOVEMENT
   ===================================================== */
 
   const background =
-    document.querySelector(
-      '.background-image'
-    );
+    document.querySelector('.background-image');
 
   if (background) {
     let x = 0;
@@ -424,19 +423,21 @@
     let time = 0;
 
 
-    addEventListener(
+    window.addEventListener(
       'pointermove',
       event => {
         targetX =
           (
             event.clientX /
-            innerWidth - .5
+            window.innerWidth -
+            .5
           ) * 5;
 
         targetY =
           (
             event.clientY /
-            innerHeight - .5
+            window.innerHeight -
+            .5
           ) * 3;
       },
       { passive: true }
@@ -459,8 +460,8 @@
         Math.cos(time * .57) * 1.2 + y;
 
       /*
-       * Do not overwrite the transform while
-       * the CRT jump is active.
+       * Let CSS control the transform
+       * while the CRT jump is active.
        */
       if (
         !document.body.classList.contains(
@@ -474,6 +475,7 @@
       requestAnimationFrame(drift);
     }
 
+
     requestAnimationFrame(drift);
   }
 
@@ -483,17 +485,15 @@
   ===================================================== */
 
   const trackingLine =
-    document.querySelector(
-      '.tracking-line'
-    );
+    document.querySelector('.tracking-line');
 
   if (trackingLine) {
+
     function tracking() {
       trackingLine.animate(
         [
           {
-            transform:
-              'translateY(0)',
+            transform: 'translateY(0)',
             opacity: 0
           },
           {
@@ -506,7 +506,7 @@
           },
           {
             transform:
-              `translateY(${innerHeight * 1.35}px)`,
+              `translateY(${window.innerHeight * 1.35}px)`,
             opacity: 0
           }
         ],
@@ -514,7 +514,6 @@
           duration:
             950 +
             Math.random() * 850,
-
           easing: 'linear'
         }
       );
