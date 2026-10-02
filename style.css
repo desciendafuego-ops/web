@@ -243,7 +243,7 @@ main {
   margin: 0 auto;
 
   color: #d8d1c9;
-font-size: clamp(30px, 3.5vw, 66px);
+font-size: clamp(30px, 2.5vw, 66px);
   font-weight: 300;
   line-height: 1.85;
   letter-spacing: .08em;
